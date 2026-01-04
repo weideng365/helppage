@@ -1,86 +1,61 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
+<ul>
+    <li><a href="#device-management">设备管理</a></li>
+    <li><a href="#channel-management">通道管理</a></li>
+    <li><a href="#stream-control">推流/预览控制</a></li>
+    <li><a href="#playback-control">回放控制</a></li>
+    <li><a href="#jt1078-management">JT1078 管理</a></li>
+</ul>
+</aside>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API 文档 - GB-CMS</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+<div class="api-content">
+    <section id="device-management">
+        <h2>设备管理</h2>
 
-<body>
-    <header>
-        <nav>
-            <a href="index.html" class="logo">GB-CMS</a>
-            <div class="nav-links">
-                <a href="index.html">首页</a>
-                <a href="api_docs.html" class="active">API 文档</a>
-                <a href="https://github.com/lkmio/gb-cms" target="_blank">GitHub</a>
-            </div>
-        </nav>
-    </header>
+        <div class="endpoint">
+            <h3><span class="method get">GET</span> 查询设备列表</h3>
+            <p class="path">/api/v1/device/list</p>
+            <p>分页查询接入的国标设备列表。</p>
 
-    <main class="api-container">
-        <aside class="sidebar">
-            <h3>目录</h3>
-            <ul>
-                <li><a href="#device-management">设备管理</a></li>
-                <li><a href="#channel-management">通道管理</a></li>
-                <li><a href="#stream-control">推流/预览控制</a></li>
-                <li><a href="#playback-control">回放控制</a></li>
-                <li><a href="#jt1078-management">JT1078 管理</a></li>
-            </ul>
-        </aside>
+            <h4>请求参数</h4>
+            <table class="params-table">
+                <thead>
+                    <tr>
+                        <th>参数名</th>
+                        <th>类型</th>
+                        <th>必填</th>
+                        <th>描述</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>start</td>
+                        <td>int</td>
+                        <td>否</td>
+                        <td>起始索引，默认0</td>
+                    </tr>
+                    <tr>
+                        <td>limit</td>
+                        <td>int</td>
+                        <td>否</td>
+                        <td>每页数量，默认10</td>
+                    </tr>
+                    <tr>
+                        <td>q</td>
+                        <td>string</td>
+                        <td>否</td>
+                        <td>搜索关键字</td>
+                    </tr>
+                    <tr>
+                        <td>online</td>
+                        <td>string</td>
+                        <td>否</td>
+                        <td>在线状态过滤 (true/false)</td>
+                    </tr>
+                </tbody>
+            </table>
 
-        <div class="api-content">
-            <section id="device-management">
-                <h2>设备管理</h2>
-
-                <div class="endpoint">
-                    <h3><span class="method get">GET</span> 查询设备列表</h3>
-                    <p class="path">/api/v1/device/list</p>
-                    <p>分页查询接入的国标设备列表。</p>
-
-                    <h4>请求参数</h4>
-                    <table class="params-table">
-                        <thead>
-                            <tr>
-                                <th>参数名</th>
-                                <th>类型</th>
-                                <th>必填</th>
-                                <th>描述</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>start</td>
-                                <td>int</td>
-                                <td>否</td>
-                                <td>起始索引，默认0</td>
-                            </tr>
-                            <tr>
-                                <td>limit</td>
-                                <td>int</td>
-                                <td>否</td>
-                                <td>每页数量，默认10</td>
-                            </tr>
-                            <tr>
-                                <td>q</td>
-                                <td>string</td>
-                                <td>否</td>
-                                <td>搜索关键字</td>
-                            </tr>
-                            <tr>
-                                <td>online</td>
-                                <td>string</td>
-                                <td>否</td>
-                                <td>在线状态过滤 (true/false)</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <h4>响应示例</h4>
-                    <pre><code>{
+            <h4>响应示例</h4>
+            <pre><code>{
     "DeviceCount": 10,
     "DeviceList": [
         {
@@ -92,203 +67,203 @@
         }
     ]
 }</code></pre>
-                </div>
+        </div>
 
-                <div class="endpoint">
-                    <h3><span class="method post">POST</span> 删除设备</h3>
-                    <p class="path">/api/v1/device/remove</p>
-                    <p>删除指定的设备。</p>
+        <div class="endpoint">
+            <h3><span class="method post">POST</span> 删除设备</h3>
+            <p class="path">/api/v1/device/remove</p>
+            <p>删除指定的设备。</p>
 
-                    <h4>请求参数</h4>
-                    <table class="params-table">
-                        <thead>
-                            <tr>
-                                <th>参数名</th>
-                                <th>类型</th>
-                                <th>必填</th>
-                                <th>描述</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>serial</td>
-                                <td>string</td>
-                                <td>是</td>
-                                <td>设备国标ID</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
+            <h4>请求参数</h4>
+            <table class="params-table">
+                <thead>
+                    <tr>
+                        <th>参数名</th>
+                        <th>类型</th>
+                        <th>必填</th>
+                        <th>描述</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>serial</td>
+                        <td>string</td>
+                        <td>是</td>
+                        <td>设备国标ID</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
 
-            <section id="channel-management">
-                <h2>通道管理</h2>
+    <section id="channel-management">
+        <h2>通道管理</h2>
 
-                <div class="endpoint">
-                    <h3><span class="method get">GET</span> 查询通道列表</h3>
-                    <p class="path">/api/v1/device/channellist</p>
-                    <p>查询指定设备下的通道列表。</p>
+        <div class="endpoint">
+            <h3><span class="method get">GET</span> 查询通道列表</h3>
+            <p class="path">/api/v1/device/channellist</p>
+            <p>查询指定设备下的通道列表。</p>
 
-                    <h4>请求参数</h4>
-                    <table class="params-table">
-                        <thead>
-                            <tr>
-                                <th>参数名</th>
-                                <th>类型</th>
-                                <th>必填</th>
-                                <th>描述</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>serial</td>
-                                <td>string</td>
-                                <td>是</td>
-                                <td>设备国标ID</td>
-                            </tr>
-                            <tr>
-                                <td>start</td>
-                                <td>int</td>
-                                <td>否</td>
-                                <td>起始索引</td>
-                            </tr>
-                            <tr>
-                                <td>limit</td>
-                                <td>int</td>
-                                <td>否</td>
-                                <td>每页数量</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
+            <h4>请求参数</h4>
+            <table class="params-table">
+                <thead>
+                    <tr>
+                        <th>参数名</th>
+                        <th>类型</th>
+                        <th>必填</th>
+                        <th>描述</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>serial</td>
+                        <td>string</td>
+                        <td>是</td>
+                        <td>设备国标ID</td>
+                    </tr>
+                    <tr>
+                        <td>start</td>
+                        <td>int</td>
+                        <td>否</td>
+                        <td>起始索引</td>
+                    </tr>
+                    <tr>
+                        <td>limit</td>
+                        <td>int</td>
+                        <td>否</td>
+                        <td>每页数量</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
 
-            <section id="stream-control">
-                <h2>推流/预览控制</h2>
+    <section id="stream-control">
+        <h2>推流/预览控制</h2>
 
-                <div class="endpoint">
-                    <h3><span class="method get">GET</span> 开始预览</h3>
-                    <p class="path">/api/v1/stream/start</p>
-                    <p>向设备发送Invite信令，开始实时预览。</p>
+        <div class="endpoint">
+            <h3><span class="method get">GET</span> 开始预览</h3>
+            <p class="path">/api/v1/stream/start</p>
+            <p>向设备发送Invite信令，开始实时预览。</p>
 
-                    <h4>请求参数</h4>
-                    <table class="params-table">
-                        <thead>
-                            <tr>
-                                <th>参数名</th>
-                                <th>类型</th>
-                                <th>必填</th>
-                                <th>描述</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>serial</td>
-                                <td>string</td>
-                                <td>是</td>
-                                <td>设备国标ID</td>
-                            </tr>
-                            <tr>
-                                <td>code</td>
-                                <td>string</td>
-                                <td>是</td>
-                                <td>通道国标ID</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <h4>请求参数</h4>
+            <table class="params-table">
+                <thead>
+                    <tr>
+                        <th>参数名</th>
+                        <th>类型</th>
+                        <th>必填</th>
+                        <th>描述</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>serial</td>
+                        <td>string</td>
+                        <td>是</td>
+                        <td>设备国标ID</td>
+                    </tr>
+                    <tr>
+                        <td>code</td>
+                        <td>string</td>
+                        <td>是</td>
+                        <td>通道国标ID</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-                <div class="endpoint">
-                    <h3><span class="method get">GET</span> 停止预览</h3>
-                    <p class="path">/api/v1/stream/stop</p>
-                    <p>停止实时预览。</p>
+        <div class="endpoint">
+            <h3><span class="method get">GET</span> 停止预览</h3>
+            <p class="path">/api/v1/stream/stop</p>
+            <p>停止实时预览。</p>
 
-                    <h4>请求参数</h4>
-                    <table class="params-table">
-                        <thead>
-                            <tr>
-                                <th>参数名</th>
-                                <th>类型</th>
-                                <th>必填</th>
-                                <th>描述</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>serial</td>
-                                <td>string</td>
-                                <td>是</td>
-                                <td>设备国标ID</td>
-                            </tr>
-                            <tr>
-                                <td>code</td>
-                                <td>string</td>
-                                <td>是</td>
-                                <td>通道国标ID</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
+            <h4>请求参数</h4>
+            <table class="params-table">
+                <thead>
+                    <tr>
+                        <th>参数名</th>
+                        <th>类型</th>
+                        <th>必填</th>
+                        <th>描述</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>serial</td>
+                        <td>string</td>
+                        <td>是</td>
+                        <td>设备国标ID</td>
+                    </tr>
+                    <tr>
+                        <td>code</td>
+                        <td>string</td>
+                        <td>是</td>
+                        <td>通道国标ID</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
 
-            <section id="playback-control">
-                <h2>回放控制</h2>
+    <section id="playback-control">
+        <h2>回放控制</h2>
 
-                <div class="endpoint">
-                    <h3><span class="method get">GET</span> 查询录像列表</h3>
-                    <p class="path">/api/v1/playback/recordlist</p>
-                    <p>查询设备端的历史录像文件。</p>
+        <div class="endpoint">
+            <h3><span class="method get">GET</span> 查询录像列表</h3>
+            <p class="path">/api/v1/playback/recordlist</p>
+            <p>查询设备端的历史录像文件。</p>
 
-                    <h4>请求参数</h4>
-                    <table class="params-table">
-                        <thead>
-                            <tr>
-                                <th>参数名</th>
-                                <th>类型</th>
-                                <th>必填</th>
-                                <th>描述</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>serial</td>
-                                <td>string</td>
-                                <td>是</td>
-                                <td>设备国标ID</td>
-                            </tr>
-                            <tr>
-                                <td>code</td>
-                                <td>string</td>
-                                <td>是</td>
-                                <td>通道国标ID</td>
-                            </tr>
-                            <tr>
-                                <td>starttime</td>
-                                <td>string</td>
-                                <td>是</td>
-                                <td>开始时间 (yyyy-MM-dd HH:mm:ss)</td>
-                            </tr>
-                            <tr>
-                                <td>endtime</td>
-                                <td>string</td>
-                                <td>是</td>
-                                <td>结束时间 (yyyy-MM-dd HH:mm:ss)</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
+            <h4>请求参数</h4>
+            <table class="params-table">
+                <thead>
+                    <tr>
+                        <th>参数名</th>
+                        <th>类型</th>
+                        <th>必填</th>
+                        <th>描述</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>serial</td>
+                        <td>string</td>
+                        <td>是</td>
+                        <td>设备国标ID</td>
+                    </tr>
+                    <tr>
+                        <td>code</td>
+                        <td>string</td>
+                        <td>是</td>
+                        <td>通道国标ID</td>
+                    </tr>
+                    <tr>
+                        <td>starttime</td>
+                        <td>string</td>
+                        <td>是</td>
+                        <td>开始时间 (yyyy-MM-dd HH:mm:ss)</td>
+                    </tr>
+                    <tr>
+                        <td>endtime</td>
+                        <td>string</td>
+                        <td>是</td>
+                        <td>结束时间 (yyyy-MM-dd HH:mm:ss)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
 
-            <section id="jt1078-management">
-                <h2>JT1078 管理</h2>
+    <section id="jt1078-management">
+        <h2>JT1078 管理</h2>
 
-                <div class="endpoint">
-                    <h3><span class="method post">POST</span> 添加虚拟设备</h3>
-                    <p class="path">/api/v1/jt/device/add</p>
-                    <p>创建一个虚拟的GB28181设备，用于映射JT1078设备。</p>
+        <div class="endpoint">
+            <h3><span class="method post">POST</span> 添加虚拟设备</h3>
+            <p class="path">/api/v1/jt/device/add</p>
+            <p>创建一个虚拟的GB28181设备，用于映射JT1078设备。</p>
 
-                    <h4>请求参数 (JSON)</h4>
-                    <pre><code>{
+            <h4>请求参数 (JSON)</h4>
+            <pre><code>{
     "username": "34020000001400000001", // 国标ID
     "server_id": "34020000002000000001", // SIP服务器ID
     "server_addr": "192.168.1.100:5060", // SIP服务器地址
@@ -297,10 +272,10 @@
     "name": "虚拟设备",
     "sim_number": "13800138000" // 关联的SIM卡号
 }</code></pre>
-                </div>
-            </section>
         </div>
-    </main>
+    </section>
+</div>
+</main>
 </body>
 
 </html>
