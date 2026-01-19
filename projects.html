@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>项目介绍 - LinkMedia</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">
+                <img src="logo.svg" alt="lkmio Logo" style="height: 40px; vertical-align: middle;">
+            </a>
+            <div class="nav-links">
+                <a href="index.html">首页</a>
+                <a href="projects.html">项目介绍</a>
+                <a href="api_docs.html">API 文档</a>
+                <a href="https://github.com/lkmio" target="_blank">GitHub</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>LinkMedia 项目矩阵</h1>
+            <p>面向国标/车载等行业视频场景，提供“信令管理 + 流媒体分发”的工程化能力组合：稳定、可扩展、便于二次集成。</p>
+        </section>
+
+        <section class="features">
+            <div class="feature-card">
+                <h3>lkmio（流媒体核心）</h3>
+                <p>基于 Go 语言的高性能流媒体服务器，支持 RTMP、GB/T 28181、JT/T 1078 等接入与协议转换，输出 RTMP/HTTP-FLV/WS-FLV/WebRTC/HLS/RTSP 等多种播放形态。</p>
+                <p style="margin-top: 1.25rem;"><a class="btn" href="lkmio.html">查看站点介绍</a></p>
+            </div>
+
+            <div class="feature-card">
+                <h3>xg-cms（国标中心管理）</h3>
+                <p>GB/T 28181 信令与资源管理平台，提供设备/通道管理、实时点播、目录查询、云台控制等能力，并通过 HTTP Hook 与 ZLMediaKit 联动实现“按需拉流、无人观看自动关闭”等调度策略。</p>
+                <p style="margin-top: 1.25rem;"><a class="btn" href="xg-cms.html">查看站点介绍</a></p>
+            </div>
+        </section>
+
+        <section style="margin-top: 4rem; max-width: 900px; margin-left: auto; margin-right: auto;">
+            <div class="feature-card">
+                <h3>建议组合方式</h3>
+                <p>在典型“多设备接入 + 多终端播放”的落地方案中，通常由 xg-cms 负责国标信令与资源编排，lkmio 负责媒体流接入、转换与分发。两者解耦后可独立扩容，也便于替换媒体后端或对接现有业务系统。</p>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lkmio - 站点介绍</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">
+                <img src="logo.svg" alt="lkmio Logo" style="height: 40px; vertical-align: middle;">
+            </a>
+            <div class="nav-links">
+                <a href="index.html">首页</a>
+                <a href="projects.html">项目介绍</a>
+                <a href="api_docs.html">API 文档</a>
+                <a href="https://github.com/lkmio" target="_blank">GitHub</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>lkmio 流媒体核心</h1>
+            <p>以工程化方式打通“设备接入、协议转换、低延迟分发、事件回调”。面向 GB/T 28181 与 JT/T 1078 等行业标准，同时提供 Web 端友好的播放形态。</p>
+        </section>
+
+        <div class="api-content">
+            <section class="endpoint">
+                <h2>定位与价值</h2>
+                <p>lkmio 是一套 Go 语言实现的高性能流媒体服务器，重点解决行业视频场景中“协议多、终端多、网络复杂、集成要求高”的交付问题：</p>
+                <ul>
+                    <li>将 GB/T 28181、JT/T 1078 等设备侧标准能力，转换为更易消费的播放协议（HTTP-FLV、HLS、WebRTC、RTSP/RTMP）。</li>
+                    <li>通过统一的 API 与 Hook 机制，将媒体生命周期能力暴露给业务系统，便于做鉴权、调度、计费、告警、资源回收等编排。</li>
+                </ul>
+            </section>
+
+            <section class="endpoint">
+                <h2>核心能力</h2>
+                <table class="params-table">
+                    <thead>
+                        <tr>
+                            <th>能力项</th>
+                            <th>说明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>多协议接入</td>
+                            <td>支持 RTMP、GB/T 28181、JT/T 1078 推流/接入（部分能力可按配置开启）。</td>
+                        </tr>
+                        <tr>
+                            <td>多协议分发</td>
+                            <td>支持 RTMP、HTTP-FLV、WebSocket-FLV、WebRTC、HLS、RTSP 等常见播放/拉流方式。</td>
+                        </tr>
+                        <tr>
+                            <td>跨标准互通</td>
+                            <td>支持 JT/T 1078 转 GB/T 28181 的工程化链路（面向车载视频向公共安全平台汇聚等场景）。</td>
+                        </tr>
+                        <tr>
+                            <td>统一控制面</td>
+                            <td>提供 REST API + WebHook 事件回调，用于业务系统编排媒体生命周期。</td>
+                        </tr>
+                        <tr>
+                            <td>低延迟与高并发</td>
+                            <td>基于 Go 并发模型与模块化协议栈实现，适合大规模设备接入与并发观看。</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="endpoint">
+                <h2>编解码与协议支持（以仓库说明为准）</h2>
+                <p>下表来自项目 README 的能力矩阵描述，用于快速判断终端兼容性与集成边界。</p>
+                <table class="params-table">
+                    <thead>
+                        <tr>
+                            <th>编码/协议</th>
+                            <th>RTMP</th>
+                            <th>FLV</th>
+                            <th>HLS</th>
+                            <th>WebRTC</th>
+                            <th>RTSP</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>H.264</td>
+                            <td>√</td>
+                            <td>√</td>
+                            <td>√</td>
+                            <td>√</td>
+                            <td>√</td>
+                        </tr>
+                        <tr>
+                            <td>H.265</td>
+                            <td>√</td>
+                            <td>√</td>
+                            <td>√</td>
+                            <td>计划支持</td>
+                            <td>√</td>
+                        </tr>
+                        <tr>
+                            <td>G.711A/U</td>
+                            <td>√</td>
+                            <td>√</td>
+                            <td>-</td>
+                            <td>√</td>
+                            <td>√</td>
+                        </tr>
+                        <tr>
+                            <td>AAC</td>
+                            <td>√</td>
+                            <td>√</td>
+                            <td>√</td>
+                            <td>-</td>
+                            <td>√</td>
+                        </tr>
+                        <tr>
+                            <td>OPUS</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>√</td>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="endpoint">
+                <h2>接口与事件回调（对接业务系统的关键入口）</h2>
+                <p>lkmio 提供面向控制面的 REST API，并通过 Hook 机制将关键事件推送到业务侧，便于做鉴权、审计、资源回收与告警。</p>
+                <table class="params-table">
+                    <thead>
+                        <tr>
+                            <th>类型</th>
+                            <th>示例</th>
+                            <th>用途</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>设备/通道管理</td>
+                            <td><code>GET /api/v1/device/list</code></td>
+                            <td>查询设备接入与在线状态（用于设备运维、资源盘点）。</td>
+                        </tr>
+                        <tr>
+                            <td>流管理</td>
+                            <td><code>GET /api/v1/source/list</code></td>
+                            <td>查看推流源与拉流端状态（用于监控与调度）。</td>
+                        </tr>
+                        <tr>
+                            <td>Hook：发布/播放</td>
+                            <td><code>on_publish</code> / <code>on_play</code>（含 done 事件）</td>
+                            <td>推流/拉流鉴权、审计、计费、风控。</td>
+                        </tr>
+                        <tr>
+                            <td>Hook：超时与录制</td>
+                            <td><code>on_idle_timeout</code> / <code>on_receive_timeout</code> / <code>on_record</code></td>
+                            <td>无人观看关闭、断流告警、录制产物通知。</td>
+                        </tr>
+                        <tr>
+                            <td>Hook：启动</td>
+                            <td><code>on_started</code></td>
+                            <td>启动时上报，便于编排与健康检查。</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="margin-top: 1rem;">更多接口细节请参考：<a href="api_docs.html">API 文档</a>。</p>
+            </section>
+
+            <section class="endpoint">
+                <h2>默认端口与关键配置（来自 <code>lkm/config.json</code>）</h2>
+                <table class="params-table">
+                    <thead>
+                        <tr>
+                            <th>模块</th>
+                            <th>默认值</th>
+                            <th>说明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>HTTP</td>
+                            <td>8080</td>
+                            <td>HTTP 接口与播放入口（如 FLV/HLS/WebRTC 文件后缀路由）。</td>
+                        </tr>
+                        <tr>
+                            <td>RTMP</td>
+                            <td>1935</td>
+                            <td>传统直播推/拉流接入。</td>
+                        </tr>
+                        <tr>
+                            <td>RTSP</td>
+                            <td>554 / 20000 / 30000</td>
+                            <td>端口可配置为单端口或多端口模式。</td>
+                        </tr>
+                        <tr>
+                            <td>WebRTC</td>
+                            <td>8000（UDP）</td>
+                            <td>低延迟 Web 播放入口。</td>
+                        </tr>
+                        <tr>
+                            <td>GB28181 RTP</td>
+                            <td>50000-60000</td>
+                            <td>国标 RTP 收流端口范围。</td>
+                        </tr>
+                        <tr>
+                            <td>JT1078</td>
+                            <td>1078（默认关闭）</td>
+                            <td>车载视频协议接入（可按需启用）。</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="endpoint">
+                <h2>快速上手（开发与部署）</h2>
+                <p>项目同时支持源码编译与 Docker 构建，适合研发联调与生产交付。</p>
+                <pre><code># 源码编译（参考仓库 README）
+go mod tidy
+go mod vendor
+go build
+
+# Docker 构建（参考仓库脚本）
+./build_docker_images.sh GOOS=linux GOARCH=amd64
+</code></pre>
+                <p>运行前建议先确认 <code>lkm/config.json</code> 中的 <code>public_ip</code>、各协议端口与 hooks 回调地址。</p>
+            </section>
+
+            <section class="endpoint">
+                <h2>典型应用场景</h2>
+                <ul>
+                    <li>智慧城市/园区安防：国标设备汇聚后输出 WebRTC/FLV/HLS 供 Web 与移动端播放。</li>
+                    <li>两客一危/车载监管：JT/T 1078 设备接入，转换为国标链路，向上级平台统一汇聚。</li>
+                    <li>跨网中继与级联：通过统一的拉流/推流控制与 Hook 机制实现按需调度与资源回收。</li>
+                </ul>
+            </section>
+        </div>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xg-cms - 站点介绍</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">
+                <img src="logo.svg" alt="lkmio Logo" style="height: 40px; vertical-align: middle;">
+            </a>
+            <div class="nav-links">
+                <a href="index.html">首页</a>
+                <a href="projects.html">项目介绍</a>
+                <a href="api_docs.html">API 文档</a>
+                <a href="https://github.com/lkmio" target="_blank">GitHub</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>xg-cms 国标中心管理</h1>
+            <p>围绕 GB/T 28181 信令交互与资源管理构建的 CMS：设备/通道生命周期、目录同步、实时点播、云台控制，并与 ZLMediaKit 通过 Hook 协议联动完成媒体调度。</p>
+        </section>
+
+        <div class="api-content">
+            <section class="endpoint">
+                <h2>定位与价值</h2>
+                <p>xg-cms 用于承载国标平台的“控制面”能力：以 SIP 信令为核心，面向业务系统提供稳定的设备管理与点播编排接口。它通常与媒体服务器（例如 ZLMediaKit）配合使用，将媒体能力外置，形成清晰的分层：</p>
+                <ul>
+                    <li>控制面（xg-cms）：GB/T 28181 设备接入、目录管理、点播/回放指令、云台控制、广播等。</li>
+                    <li>数据面（媒体服务器）：RTP 收流、转封装、分发、录制等媒体处理能力。</li>
+                </ul>
+                <p>这种拆分使得平台具备更好的可扩展性，也便于与既有业务系统集成。</p>
+            </section>
+
+            <section class="endpoint">
+                <h2>核心能力（以仓库功能清单为准）</h2>
+                <table class="params-table">
+                    <thead>
+                        <tr>
+                            <th>能力项</th>
+                            <th>状态</th>
+                            <th>说明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>GB28181 注册与 Digest 认证</td>
+                            <td>已支持</td>
+                            <td>设备注册/注销、鉴权与心跳保活。</td>
+                        </tr>
+                        <tr>
+                            <td>目录查询与订阅</td>
+                            <td>已支持</td>
+                            <td>目录查询、目录订阅通知，维护通道资源视图。</td>
+                        </tr>
+                        <tr>
+                            <td>实时点播（Invite）与 RTP 接收</td>
+                            <td>已支持</td>
+                            <td>对接媒体服务器，完成实时预览链路搭建。</td>
+                        </tr>
+                        <tr>
+                            <td>云台控制（PTZ）</td>
+                            <td>已支持</td>
+                            <td>提供云台控制指令下发能力。</td>
+                        </tr>
+                        <tr>
+                            <td>语音广播</td>
+                            <td>已支持</td>
+                            <td>支持国标语音广播相关能力。</td>
+                        </tr>
+                        <tr>
+                            <td>历史回放/级联/更多状态接口</td>
+                            <td>规划中</td>
+                            <td>仓库 README 标注为未完成项，适合作为后续迭代方向。</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="endpoint">
+                <h2>对外接口（HTTP API / Swagger）</h2>
+                <p>xg-cms 提供基于 Gin 的 HTTP API，并内置 Swagger 文档入口，便于联调与二次开发。</p>
+                <table class="params-table">
+                    <thead>
+                        <tr>
+                            <th>功能域</th>
+                            <th>路由示例</th>
+                            <th>说明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Swagger</td>
+                            <td><code>GET /swagger/*any</code></td>
+                            <td>在线接口文档（服务启动后访问）。</td>
+                        </tr>
+                        <tr>
+                            <td>GB28181 控制</td>
+                            <td><code>GET /dev/v1/gb/invite</code> / <code>GET /dev/v1/gb/ptz</code> / <code>GET /dev/v1/gb/catalog</code></td>
+                            <td>点播、云台、目录查询等控制入口。</td>
+                        </tr>
+                        <tr>
+                            <td>WebRTC 播放</td>
+                            <td><code>POST /dev/v1/rtc/play</code></td>
+                            <td>WebRTC 播放相关接口。</td>
+                        </tr>
+                        <tr>
+                            <td>WebSocket</td>
+                            <td><code>GET /dev/ws/chat</code></td>
+                            <td>实时消息通道（路由受 JWT 中间件保护）。</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="endpoint">
+                <h2>与 ZLMediaKit 的联动（Hook 驱动的调度闭环）</h2>
+                <p>xg-cms 通过 ZLMediaKit 的 HTTP Hook 机制感知播放/拉流事件，并在“流不存在”等场景触发按需点播，形成典型的媒体调度闭环：</p>
+                <table class="params-table">
+                    <thead>
+                        <tr>
+                            <th>Hook</th>
+                            <th>用途</th>
+                            <th>实现入口</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>on_play</code></td>
+                            <td>播放鉴权与策略控制</td>
+                            <td><code>POST /dev/v1/zlk/hook/on_play</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>on_stream_not_found</code></td>
+                            <td>按需拉流（请求的流不存在时触发点播）</td>
+                            <td><code>POST /dev/v1/zlk/hook/on_stream_not_found</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>on_stream_none_reader</code></td>
+                            <td>无人观看资源回收（关闭直播流、发送 Bye）</td>
+                            <td><code>POST /dev/v1/zlk/hook/on_stream_none_reader</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>on_server_started</code> / <code>on_server_keepalive</code></td>
+                            <td>媒体节点生命周期感知</td>
+                            <td><code>POST /dev/v1/zlk/hook/on_server_started</code> 等</td>
+                        </tr>
+                        <tr>
+                            <td><code>on_flow_report</code></td>
+                            <td>流量统计与审计</td>
+                            <td><code>POST /dev/v1/zlk/hook/on_flow_report</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="margin-top: 1rem;">ZLMediaKit Hook 参考文档：<a href="https://docs.zlmediakit.com/guide/media_server/web_hook_api.html" target="_blank">Web Hook API</a>。</p>
+            </section>
+
+            <section class="endpoint">
+                <h2>部署与运维要点</h2>
+                <p>核心配置集中在 <code>xg-cms/config.yml</code>，典型包括：</p>
+                <ul>
+                    <li>HTTP 服务监听：<code>http.host</code> / <code>http.port</code>（默认 8080）。</li>
+                    <li>MySQL：<code>mysql.dsn</code>（可配置 <code>mysql.initdb</code> 初始化表结构）。</li>
+                    <li>Redis：<code>redis.host</code> / <code>redis.port</code> / <code>redis.password</code>。</li>
+                    <li>SIP：<code>sip.listen_ip</code> / <code>sip.publish_ip</code> / <code>sip.port</code>（默认 15060，支持 UDP/TCP）。</li>
+                    <li>ZLMediaKit：<code>zlk.host</code> / <code>zlk.public_ip</code> / <code>zlk.secret</code>，以及 hook 回调地址。</li>
+                </ul>
+                <p>仓库提供 Docker Compose 方式运行与交叉编译说明（详见 <code>CMD.MD</code>）。</p>
+            </section>
+
+            <section class="endpoint">
+                <h2>技术栈概览（来自 go.mod）</h2>
+                <table class="params-table">
+                    <thead>
+                        <tr>
+                            <th>模块</th>
+                            <th>说明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Gin</td>
+                            <td>HTTP API 服务框架。</td>
+                        </tr>
+                        <tr>
+                            <td>GoSIP</td>
+                            <td>GB/T 28181 信令栈基础能力。</td>
+                        </tr>
+                        <tr>
+                            <td>GORM + MySQL</td>
+                            <td>设备、通道、位置等数据持久化。</td>
+                        </tr>
+                        <tr>
+                            <td>Redis</td>
+                            <td>缓存、会话/状态支撑。</td>
+                        </tr>
+                        <tr>
+                            <td>Swagger</td>
+                            <td>接口文档生成与展示。</td>
+                        </tr>
+                        <tr>
+                            <td>gin-jwt</td>
+                            <td>JWT 鉴权中间件（当前路由中部分功能可启用）。</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="endpoint">
+                <h2>典型应用场景</h2>
+                <ul>
+                    <li>多品牌国标摄像机统一接入：目录自动同步、通道状态可视化、统一点播入口。</li>
+                    <li>视频中台控制面：为上层业务提供统一 REST API（预览、PTZ、订阅、广播）。</li>
+                    <li>媒体调度闭环：结合 ZLMediaKit Hook 实现按需拉流与无人观看自动关闭，降低资源占用。</li>
+                </ul>
+            </section>
+        </div>
+    </main>
+</body>
+
+</html>
